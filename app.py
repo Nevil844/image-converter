@@ -17,24 +17,23 @@ def allowed_file(filename):
 def processImage(filename, operation):
     print(f"the operation is {operation} and filename is {filename}")
     img = cv2.imread(f"uploads/{filename}")
-    match operation:
-        case "cgray":
-            imgProcessed = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            newFilename = f"static/{filename}"
-            cv2.imwrite(newFilename, imgProcessed)
-            return newFilename
-        case "cwebp": 
-            newFilename = f"static/{filename.split('.')[0]}.webp"
-            cv2.imwrite(newFilename, img)
-            return newFilename
-        case "cjpg": 
-            newFilename = f"static/{filename.split('.')[0]}.jpg"
-            cv2.imwrite(newFilename, img)
-            return newFilename
-        case "cpng": 
-            newFilename = f"static/{filename.split('.')[0]}.png"
-            cv2.imwrite(newFilename, img)
-            return newFilename
+    if(operation=="cgray"):
+        imgProcessed = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        newFilename = f"static/{filename}"
+        cv2.imwrite(newFilename, imgProcessed)
+        return newFilename
+    elif(operation=="cwebp"): 
+        newFilename = f"static/{filename.split('.')[0]}.webp"
+        cv2.imwrite(newFilename, img)
+        return newFilename
+    elif(operation=="cjpg"): 
+        newFilename = f"static/{filename.split('.')[0]}.jpg"
+        cv2.imwrite(newFilename, img)
+        return newFilename
+    elif(operation=="cpng"): 
+        newFilename = f"static/{filename.split('.')[0]}.png"
+        cv2.imwrite(newFilename, img)
+        return newFilename
     pass
 
 @app.route("/")
