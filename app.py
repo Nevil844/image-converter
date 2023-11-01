@@ -34,6 +34,16 @@ def processImage(filename, operation):
         newFilename = f"static/{filename.split('.')[0]}.png"
         cv2.imwrite(newFilename, img)
         return newFilename
+    elif(operation=="ccar"):
+        originalmage=img
+        grayScaleImage = cv2.cvtColor(originalmage, cv2.COLOR_BGR2GRAY)
+        smoothGrayScale = cv2.medianBlur(grayScaleImage, 5)
+        getEdge = cv2.adaptiveThreshold(smoothGrayScale, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 9, 9)
+        colorImage = cv2.bilateralFilter(originalmage, 9, 300, 300)
+        cartoonImage = cv2.bitwise_and(colorImage, colorImage, mask=getEdge)
+        newFilename = f"static/cartoon_{filename}"
+        cv2.imwrite(newFilename, cartoonImage)
+        return newFilename
     pass
 
 @app.route("/")
